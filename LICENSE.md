@@ -38,3 +38,5 @@ The PoissonRandom.jl package is licensed under the MIT "Expat" License:
 > SOFTWARE.
 >
 >
+
+All of this code is derived from JuliaStats/Distributions.jl
