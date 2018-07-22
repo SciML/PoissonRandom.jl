@@ -1,6 +1,6 @@
 using PoissonRandom
 import Distributions
-using Test
+using Test, Statistics
 
 n_tsamples = 10^5
 
@@ -33,14 +33,14 @@ function test_samples(rand_func,
     rmin = floor(Int,quantile(distr, 0.00001))::Int
     rmax = floor(Int,quantile(distr, 0.99999))::Int
     m = rmax - rmin + 1  # length of the range
-    p0 = Distributions.pdf.(distr, rmin:rmax)  # reference probability masses
+    p0 = Distributions.pdf.((distr,), rmin:rmax)  # reference probability masses
     @assert length(p0) == m
 
     # determine confidence intervals for counts:
     # with probability q, the count will be out of this interval.
     #
-    clb = Vector{Int}(m)
-    cub = Vector{Int}(m)
+    clb = Vector{Int}(undef,m)
+    cub = Vector{Int}(undef,m)
     for i = 1:m
         bp = Distributions.Binomial(n, p0[i])
         clb[i] = floor(Int,quantile(bp, q/2))

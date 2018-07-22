@@ -2,8 +2,9 @@ __precompile__()
 
 module PoissonRandom
 
+using Random
 
-function count_rand(λ,rng::AbstractRNG=Base.GLOBAL_RNG)
+function count_rand(λ,rng::AbstractRNG=Random.GLOBAL_RNG)
     n = 0
     c = randexp(rng)
     while c < λ
@@ -21,7 +22,7 @@ end
 #
 #   For μ sufficiently large, (i.e. >= 10.0)
 #
-function ad_rand(λ,rng::AbstractRNG=Base.GLOBAL_RNG)
+function ad_rand(λ,rng::AbstractRNG=Random.GLOBAL_RNG)
   s = sqrt(λ)
   d = 6.0*λ^2
   L = floor(Int,λ-1.1484)
