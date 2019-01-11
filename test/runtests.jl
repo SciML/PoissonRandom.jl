@@ -82,3 +82,8 @@ println("testing ad random sampler")
 for λ in [5.0, 10.0, 15.0, 20.0, 30.0]
   test_samples(PoissonRandom.ad_rand, Distributions.Poisson(λ), n_tsamples)
 end
+
+println("testing mixed random sampler")
+for λ in [5.0, 10.0, 15.0, 20.0, 30.0]
+  test_samples(pois_rand, Distributions.Poisson(λ), n_tsamples)
+end
