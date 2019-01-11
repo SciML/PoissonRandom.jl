@@ -1,8 +1,8 @@
-__precompile__()
-
 module PoissonRandom
 
 using Random
+
+export pois_rand
 
 function count_rand(λ,rng::AbstractRNG=Random.GLOBAL_RNG)
     n = 0
@@ -139,14 +139,12 @@ function procf(λ, K::Int, s::Float64)
     return px,py,fx,fy
 end
 
-function pois_rand(λ,rng::AbstractRNG=Base.GLOBAL_RNG)
+function pois_rand(λ,rng::AbstractRNG=Random.GLOBAL_RNG)
   if λ < 6
     return count_rand(λ,rng)
   else
     return ad_rand(λ,rng)
   end
 end
-
-export pois_rand
 
 end # module
