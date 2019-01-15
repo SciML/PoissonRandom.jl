@@ -4,7 +4,8 @@ using Random
 
 export pois_rand
 
-function count_rand(λ,rng::AbstractRNG=Random.GLOBAL_RNG)
+count_rand(λ) = count_rand(Random.GLOBAL_RNG, λ)
+function count_rand(rng::AbstractRNG, λ)
     n = 0
     c = randexp(rng)
     while c < λ
@@ -22,7 +23,8 @@ end
 #
 #   For μ sufficiently large, (i.e. >= 10.0)
 #
-function ad_rand(λ,rng::AbstractRNG=Random.GLOBAL_RNG)
+ad_rand(λ) = ad_rand(Random.GLOBAL_RNG, λ)
+function ad_rand(rng::AbstractRNG, λ)
   s = sqrt(λ)
   d = 6.0*λ^2
   L = floor(Int,λ-1.1484)
@@ -139,12 +141,7 @@ function procf(λ, K::Int, s::Float64)
     return px,py,fx,fy
 end
 
-function pois_rand(λ,rng::AbstractRNG=Random.GLOBAL_RNG)
-  if λ < 6
-    return count_rand(λ,rng)
-  else
-    return ad_rand(λ,rng)
-  end
-end
+pois_rand(λ) = pois_rand(Random.GLOBAL_RNG, λ)
+pois_rand(rng::AbstractRNG, λ) = λ < 6 ? count_rand(rng, λ) : ad_rand(rng, λ)
 
 end # module
