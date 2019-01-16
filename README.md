@@ -13,7 +13,7 @@ pois_rand(λ)
 # Using another RNG
 using RandomNumbers
 rng = Xorshifts.Xoroshiro128Plus()
-pois_rand(λ,rng)
+pois_rand(rng,λ)
 ```
 
 ## Implementation
@@ -29,46 +29,46 @@ using RandomNumbers, Distributions, BenchmarkTools, StaticArrays,
 labels = ["count_rand","ad_rand","pois_rand","Distributions.jl"]
 rng = Xorshifts.Xoroshiro128Plus()
 
-function n_count(λ,rng,n)
+function n_count(rng,λ,n)
   tmp = 0
   for i in 1:n
-    tmp += PoissonRandom.count_rand(λ,rng)
+    tmp += PoissonRandom.count_rand(rng,λ)
   end
 end
 
-function n_pois(λ,rng,n)
+function n_pois(rng,λ,n)
   tmp = 0
   for i in 1:n
-    tmp += pois_rand(λ,rng)
+    tmp += pois_rand(rng,λ)
   end
 end
 
-function n_ad(λ,rng,n)
+function n_ad(rng,λ,n)
   tmp = 0
   for i in 1:n
-    tmp += PoissonRandom.ad_rand(λ,rng)
+    tmp += PoissonRandom.ad_rand(rng,λ)
   end
 end
 
-function n_dist(λ,rng,n)
+function n_dist(λ,n)
   tmp = 0
   for i in 1:n
     tmp += rand(Poisson(λ))
   end
 end
 
-function time_λ(λ,rng,n)
-  t1 = @elapsed n_count(λ,rng,n)
-  t2 = @elapsed n_ad(λ,rng,n)
-  t3 = @elapsed n_pois(λ,rng,n)
-  t4 = @elapsed n_dist(λ,rng,n)
+function time_λ(rng,λ,n)
+  t1 = @elapsed n_count(rng,λ,n)
+  t2 = @elapsed n_ad(rng,λ,n)
+  t3 = @elapsed n_pois(rng,λ,n)
+  t4 = @elapsed n_dist(λ,n)
   @SArray [t1,t2,t3,t4]
 end
 
 # Compile
-time_λ(5,rng,5000000)
+time_λ(rng,5,5000000)
 # Run with a bunch of λ
-times = VectorOfArray([time_λ(n,rng,5000000) for n in 1:20])'
+times = VectorOfArray([time_λ(rng,n,5000000) for n in 1:20])'
 plot(times,labels = labels, lw = 3)
 ```
 
