@@ -1,6 +1,6 @@
 # PoissonRandom
 
-[![Build Status](https://travis-ci.org/JuliaDiffEq/PoissonRandom.jl.svg?branch=master)](https://travis-ci.org/JuliaDiffEq/PoissonRandom.jl)
+[![Build Status](https://github.com/SciML/PoissonRandom.jl/workflows/CI/badge.svg)](https://github.com/SciML/PoissonRandom.jl/actions?query=workflow%3ACI)
 
 ## Usage
 
