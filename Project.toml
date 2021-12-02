@@ -5,7 +5,7 @@ uuid = "e409e4f3-bfea-5376-8464-e040bb5c01ab"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [compat]
-julia = "1"
+julia = "1.6"
 
 [extras]
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
