@@ -1,19 +1,20 @@
 # PoissonRandom.jl: Fast Poisson Random Numbers
 
-[![Build Status](https://github.com/SciML/PoissonRandom.jl/workflows/CI/badge.svg)](https://github.com/SciML/PoissonRandom.jl/actions?query=workflow%3ACI)
+PoissonRandom.jl is a component of the SciML ecosystem which allows
+for fast generation of Poisson random numbers.
 
-## Tutorials and Documentation
+## Installation
 
-For information on using the package,
-[see the stable documentation](https://poissonrandom.sciml.ai/stable/). Use the
-[in-development documentation](https://poissonrandom.sciml.ai/dev/) for the version of
-the documentation, which contains the unreleased features.
+To install ParameterizedFunctions.jl, use the Julia package manager:
+
+```julia
+using Pkg
+Pkg.add("PoissonRandom")
+```
 
 ## Usage
 
 ```julia
-Pkg.add("PoissonRandom")
-
 # Simple Poisson random
 pois_rand(λ)
 
@@ -83,3 +84,14 @@ plot(times,labels = labels, lw = 3)
 
 So this package ends up about 30% or so faster than Distributions.jl (the method
 at the far edge is λ-independent so that goes on forever).
+
+## Contributing
+
+- Please refer to the
+  [SciML ColPrac: Contributor's Guide on Collaborative Practices for Community Packages](https://github.com/SciML/ColPrac/blob/master/README.md)
+  for guidance on PRs, issues, and other matters relating to contributing to SciML.
+- There are a few community forums:
+    - the #diffeq-bridged channel in the [Julia Slack](https://julialang.org/slack/)
+    - [JuliaDiffEq](https://gitter.im/JuliaDiffEq/Lobby) on Gitter
+    - on the [Julia Discourse forums](https://discourse.julialang.org)
+    - see also [SciML Community page](https://sciml.ai/community/)
