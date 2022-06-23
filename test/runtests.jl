@@ -7,8 +7,8 @@ n_tsamples = 10^5
 function test_samples(rand_func,
                       distr::Distributions.DiscreteUnivariateDistribution,
                       n::Int;                                # number of samples to generate
-                      q::Float64=1.0e-8,                     # confidence interval, 1 - q as confidence
-                      verbose::Bool=false)                   # show intermediate info (for debugging)
+                      q::Float64 = 1.0e-8,                     # confidence interval, 1 - q as confidence
+                      verbose::Bool = false)                   # show intermediate info (for debugging)
 
     # The basic idea
     # ------------------
@@ -30,8 +30,8 @@ function test_samples(rand_func,
     vmin = minimum(distr)
     vmax = maximum(distr)
 
-    rmin = floor(Int,quantile(distr, 0.00001))::Int
-    rmax = floor(Int,quantile(distr, 0.99999))::Int
+    rmin = floor(Int, quantile(distr, 0.00001))::Int
+    rmax = floor(Int, quantile(distr, 0.99999))::Int
     m = rmax - rmin + 1  # length of the range
     p0 = Distributions.pdf.((distr,), rmin:rmax)  # reference probability masses
     @assert length(p0) == m
@@ -39,12 +39,12 @@ function test_samples(rand_func,
     # determine confidence intervals for counts:
     # with probability q, the count will be out of this interval.
     #
-    clb = Vector{Int}(undef,m)
-    cub = Vector{Int}(undef,m)
-    for i = 1:m
+    clb = Vector{Int}(undef, m)
+    cub = Vector{Int}(undef, m)
+    for i in 1:m
         bp = Distributions.Binomial(n, p0[i])
-        clb[i] = floor(Int,quantile(bp, q/2))
-        cub[i] = ceil(Int,Distributions.cquantile(bp, q/2))
+        clb[i] = floor(Int, quantile(bp, q / 2))
+        cub[i] = ceil(Int, Distributions.cquantile(bp, q / 2))
         @assert cub[i] >= clb[i]
     end
 
@@ -54,7 +54,7 @@ function test_samples(rand_func,
 
     # scan samples and get counts
     cnts = zeros(Int, m)
-    for i = 1:n
+    for i in 1:n
         @inbounds si = samples[i]
         if rmin <= si <= rmax
             cnts[si - rmin + 1] += 1
@@ -65,7 +65,7 @@ function test_samples(rand_func,
     end
 
     # check the counts
-    for i = 1:m
+    for i in 1:m
         verbose && println("v = $(rmin+i-1) ==> ($(clb[i]), $(cub[i])): $(cnts[i])")
         clb[i] <= cnts[i] <= cub[i] ||
             error("The counts are out of the confidence interval.")
@@ -75,15 +75,15 @@ end
 
 println("testing count random sampler")
 for λ in [0.2, 0.5, 1.0, 2.0, 5.0, 10.0, 15.0, 20.0, 30.0]
-  test_samples(PoissonRandom.count_rand, Distributions.Poisson(λ), n_tsamples)
+    test_samples(PoissonRandom.count_rand, Distributions.Poisson(λ), n_tsamples)
 end
 
 println("testing ad random sampler")
 for λ in [5.0, 10.0, 15.0, 20.0, 30.0]
-  test_samples(PoissonRandom.ad_rand, Distributions.Poisson(λ), n_tsamples)
+    test_samples(PoissonRandom.ad_rand, Distributions.Poisson(λ), n_tsamples)
 end
 
 println("testing mixed random sampler")
 for λ in [5.0, 10.0, 15.0, 20.0, 30.0]
-  test_samples(pois_rand, Distributions.Poisson(λ), n_tsamples)
+    test_samples(pois_rand, Distributions.Poisson(λ), n_tsamples)
 end
