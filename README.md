@@ -12,8 +12,8 @@
 ## Tutorials and Documentation
 
 For information on using the package,
-[see the stable documentation](https://poissonrandom.sciml.ai/stable/). Use the
-[in-development documentation](https://poissonrandom.sciml.ai/dev/) for the version of
+[see the stable documentation](https://docs.sciml.ai/PoissonRandom/stable/). Use the
+[in-development documentation](https://docs.sciml.ai/PoissonRandom/dev/) for the version of
 the documentation, which contains the unreleased features.
 
 ## Usage
