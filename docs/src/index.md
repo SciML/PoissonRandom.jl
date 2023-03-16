@@ -5,7 +5,7 @@ for fast generation of Poisson random numbers.
 
 ## Installation
 
-To install ParameterizedFunctions.jl, use the Julia package manager:
+To install PoissonRandom.jl, use the Julia package manager:
 
 ```julia
 using Pkg
