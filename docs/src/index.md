@@ -84,7 +84,7 @@ plot(times, labels = labels, lw = 3)
 ![benchmark result](https://user-images.githubusercontent.com/1814174/40387004-1e377776-5dc0-11e8-88a2-2d9cb12db984.png)
 
 So this package ends up about 30% or so faster than Distributions.jl (the method
-at the far edge is λ-independent so that goes on forever).
+at the far edge is λ-independent, so that goes on forever).
 
 ## Contributing
 
