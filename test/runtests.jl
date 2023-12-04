@@ -12,7 +12,7 @@ function test_samples(rand_func,
 
     # The basic idea
     # ------------------
-    #   Generate n samples, and count the occurences of each value within a reasonable range.
+    #   Generate n samples, and count the occurrences of each value within a reasonable range.
     #   For each distinct value, it computes an confidence interval of the counts
     #   and checks whether the count is within this interval.
     #
