@@ -57,31 +57,37 @@ time_λ(rng, 5, 5000000)
 # Run with a bunch of λ
 times = VectorOfArray([time_λ(rng, n, 5000000) for n in 1:20])&#39;
 plot(times, labels = labels, lw = 3)</code></pre><p><img src="https://user-images.githubusercontent.com/1814174/40387004-1e377776-5dc0-11e8-88a2-2d9cb12db984.png" alt="benchmark result"/></p><p>So this package ends up about 30% or so faster than Distributions.jl (the method at the far edge is λ-independent, so that goes on forever).</p><h2 id="Contributing"><a class="docs-heading-anchor" href="#Contributing">Contributing</a><a id="Contributing-1"></a><a class="docs-heading-anchor-permalink" href="#Contributing" title="Permalink"></a></h2><ul><li><p>Please refer to the <a href="https://github.com/SciML/ColPrac/blob/master/README.md">SciML ColPrac: Contributor&#39;s Guide on Collaborative Practices for Community Packages</a> for guidance on PRs, issues, and other matters relating to contributing to SciML.</p></li><li><p>See the <a href="https://github.com/SciML/SciMLStyle">SciML Style Guide</a> for common coding practices and other style decisions.</p></li><li><p>There are a few community forums:</p><ul><li>The #diffeq-bridged and #sciml-bridged channels in the <a href="https://julialang.org/slack/">Julia Slack</a></li><li>The #diffeq-bridged and #sciml-bridged channels in the <a href="https://julialang.zulipchat.com/#narrow/stream/279055-sciml-bridged">Julia Zulip</a></li><li>On the <a href="https://discourse.julialang.org">Julia Discourse forums</a></li><li>See also <a href="https://sciml.ai/community/">SciML Community page</a></li></ul></li></ul><h2 id="Reproducibility"><a class="docs-heading-anchor" href="#Reproducibility">Reproducibility</a><a id="Reproducibility-1"></a><a class="docs-heading-anchor-permalink" href="#Reproducibility" title="Permalink"></a></h2><details><summary>The documentation of this SciML package was built using these direct dependencies,</summary><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Status `~/work/PoissonRandom.jl/PoissonRandom.jl/docs/Project.toml`
-  [e30172f5] Documenter v1.0.1
-  [e409e4f3] PoissonRandom v0.4.4 `~/work/PoissonRandom.jl/PoissonRandom.jl`</code></pre></details><details><summary>and using this machine and Julia version.</summary><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Julia Version 1.9.3
-Commit bed2cd540a1 (2023-08-24 14:43 UTC)
+  [e30172f5] Documenter v1.2.1
+  [e409e4f3] PoissonRandom v0.4.4 `~/work/PoissonRandom.jl/PoissonRandom.jl`</code></pre></details><details><summary>and using this machine and Julia version.</summary><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Julia Version 1.9.4
+Commit 8e5136fa297 (2023-11-14 08:46 UTC)
 Build Info:
   Official https://julialang.org/ release
 Platform Info:
   OS: Linux (x86_64-linux-gnu)
-  CPU: 2 × Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz
+  CPU: 4 × AMD EPYC 7763 64-Core Processor
   WORD_SIZE: 64
   LIBM: libopenlibm
-  LLVM: libLLVM-14.0.6 (ORCJIT, skylake-avx512)
-  Threads: 1 on 2 virtual cores</code></pre></details><details><summary>A more complete overview of all dependencies and their versions is also provided.</summary><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Status `~/work/PoissonRandom.jl/PoissonRandom.jl/docs/Manifest.toml`
+  LLVM: libLLVM-14.0.6 (ORCJIT, znver3)
+  Threads: 1 on 4 virtual cores</code></pre></details><details><summary>A more complete overview of all dependencies and their versions is also provided.</summary><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Status `~/work/PoissonRandom.jl/PoissonRandom.jl/docs/Manifest.toml`
   [a4c015fc] ANSIColoredPrinters v0.0.1
   [1520ce14] AbstractTrees v0.4.4
   [ffbed154] DocStringExtensions v0.9.3
-  [e30172f5] Documenter v1.0.1
+  [e30172f5] Documenter v1.2.1
+  [d7ba0133] Git v1.3.0
   [b5f81e59] IOCapture v0.2.3
+  [692b3bcd] JLLWrappers v1.5.0
   [682c06a0] JSON v0.21.4
-  [0e77f7df] LazilyInitializedFields v1.2.1
-  [d0879d2d] MarkdownAST v0.1.1
-  [69de0a69] Parsers v2.7.2
+  [0e77f7df] LazilyInitializedFields v1.2.2
+  [d0879d2d] MarkdownAST v0.1.2
+  [69de0a69] Parsers v2.8.0
   [e409e4f3] PoissonRandom v0.4.4 `~/work/PoissonRandom.jl/PoissonRandom.jl`
   [aea7be01] PrecompileTools v1.2.0
   [21216c6a] Preferences v1.4.1
   [2792f1a3] RegistryInstances v0.1.0
+  [2e619515] Expat_jll v2.5.0+0
+  [f8c6e375] Git_jll v2.42.0+0
+  [94ce4f54] Libiconv_jll v1.17.0+0
+  [458c3c95] OpenSSL_jll v3.0.12+0
   [0dad84c5] ArgTools v1.1.1
   [56f22d72] Artifacts
   [2a0f44e3] Base64
@@ -89,7 +95,7 @@ Platform Info:
   [f43a241f] Downloads v1.6.0
   [7b1f6079] FileWatching
   [b77e0a4c] InteractiveUtils
-  [b27032c2] LibCURL v0.6.3
+  [b27032c2] LibCURL v0.6.4
   [76f85450] LibGit2
   [8f399da3] Libdl
   [56ddb016] Logging
@@ -108,10 +114,11 @@ Platform Info:
   [8dfed614] Test
   [cf7118a7] UUIDs
   [4ec0a83e] Unicode
-  [deac9b47] LibCURL_jll v7.84.0+0
-  [29816b5a] LibSSH2_jll v1.10.2+0
+  [deac9b47] LibCURL_jll v8.4.0+0
+  [29816b5a] LibSSH2_jll v1.11.0+1
   [c8ffd9c3] MbedTLS_jll v2.28.2+0
   [14a3606d] MozillaCACerts_jll v2022.10.11
+  [efcefdf7] PCRE2_jll v10.42.0+0
   [83775a58] Zlib_jll v1.2.13+0
-  [8e850ede] nghttp2_jll v1.48.0+0
-  [3f19e933] p7zip_jll v17.4.0+0</code></pre></details><p>You can also download the <a href="https://github.com/SciML/PoissonRandom.jl/tree/gh-pages/v0.4.4/assets/Manifest.toml">manifest</a> file and the <a href="https://github.com/SciML/PoissonRandom.jl/tree/gh-pages/v0.4.4/assets/Project.toml">project</a> file.</p></article><nav class="docs-footer"><a class="docs-footer-nextpage" href="pois_rand/">Poisson Random API »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="auto">Automatic (OS)</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.0.1 on <span class="colophon-date" title="Saturday 23 September 2023 04:40">Saturday 23 September 2023</span>. Using Julia version 1.9.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+  [8e850ede] nghttp2_jll v1.52.0+1
+  [3f19e933] p7zip_jll v17.4.0+0</code></pre></details><p>You can also download the <a href="https://github.com/SciML/PoissonRandom.jl/tree/gh-pages/v0.4.4/assets/Manifest.toml">manifest</a> file and the <a href="https://github.com/SciML/PoissonRandom.jl/tree/gh-pages/v0.4.4/assets/Project.toml">project</a> file.</p></article><nav class="docs-footer"><a class="docs-footer-nextpage" href="pois_rand/">Poisson Random API »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="auto">Automatic (OS)</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.2.1 on <span class="colophon-date" title="Monday 4 December 2023 13:16">Monday 4 December 2023</span>. Using Julia version 1.9.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
