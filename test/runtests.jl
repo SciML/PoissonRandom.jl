@@ -2,6 +2,8 @@ using PoissonRandom
 import Distributions
 using Test, Statistics
 
+include("qa.jl")
+
 n_tsamples = 10^5
 
 function test_samples(rand_func,
