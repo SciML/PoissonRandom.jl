@@ -2,5 +2,5 @@
 
 pages = [
     "Home" => "index.md",
-    "pois_rand.md",
+    "pois_rand.md"
 ]

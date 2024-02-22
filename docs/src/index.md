@@ -33,8 +33,8 @@ See [this blog post for details](https://www.johndcook.com/blog/2010/06/14/gener
 
 ```julia
 using RandomNumbers,
-    Distributions, BenchmarkTools, StaticArrays,
-    RecursiveArrayTools, Plots, PoissonRandom
+      Distributions, BenchmarkTools, StaticArrays,
+      RecursiveArrayTools, Plots, PoissonRandom
 labels = ["count_rand", "ad_rand", "pois_rand", "Distributions.jl"]
 rng = Xorshifts.Xoroshiro128Plus()
 
