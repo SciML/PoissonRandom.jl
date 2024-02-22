@@ -7,10 +7,10 @@ include("qa.jl")
 n_tsamples = 10^5
 
 function test_samples(rand_func,
-    distr::Distributions.DiscreteUnivariateDistribution,
-    n::Int;                                # number of samples to generate
-    q::Float64 = 1.0e-8,                     # confidence interval, 1 - q as confidence
-    verbose::Bool = false)                   # show intermediate info (for debugging)
+        distr::Distributions.DiscreteUnivariateDistribution,
+        n::Int;                                # number of samples to generate
+        q::Float64 = 1.0e-8,                     # confidence interval, 1 - q as confidence
+        verbose::Bool = false)                   # show intermediate info (for debugging)
 
     # The basic idea
     # ------------------
