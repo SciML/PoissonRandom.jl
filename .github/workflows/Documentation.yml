@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - at/test
     tags: '*'
   pull_request:
   schedule:
@@ -16,5 +17,5 @@ concurrency:
 jobs:
   build-and-deploy-docs:
     name: "Documentation"
-    uses: "SciML/.github/.github/workflows/documentation.yml@v1"
+    uses: "SciML/.github/.github/workflows/documentation.yml@at/test"
     secrets: "inherit"
