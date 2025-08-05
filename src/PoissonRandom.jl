@@ -6,7 +6,7 @@ using SpecialFunctions: loggamma
 
 export pois_rand, PassthroughRNG
 
-# GPU-compatible Poisson sampling PassthroughRNG
+# GPU-compatible Poisson sampling via PassthroughRNG
 struct PassthroughRNG <: AbstractRNG end
 
 rand(rng::PassthroughRNG) = Random.rand()
