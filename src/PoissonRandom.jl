@@ -95,7 +95,7 @@ function procf(λ, K::Int, s::Float64)
     c0 = 1 - b1 + 3 * b2 - 15 * c3
 
     if K < 10
-        px = -λ
+        px = -float(λ)
         log_py = K * log(λ) - loggamma(K + 1) # log(K!) via loggamma
         py = exp(log_py)
     else
