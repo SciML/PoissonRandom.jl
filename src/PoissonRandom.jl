@@ -132,7 +132,7 @@ rng = Xorshifts.Xoroshiro128Plus()
 pois_rand(rng, λ)
 
 # Simple Poisson random on GPU
-pois_rand(PassthroughRNG(), λ)
+pois_rand(PoissonRandom.PassthroughRNG(), λ)
 ```
 """
 pois_rand(λ) = pois_rand(Random.GLOBAL_RNG, λ)
