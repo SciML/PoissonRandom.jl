@@ -6,27 +6,15 @@ using SpecialFunctions: loggamma
 
 export pois_rand
 
-# GPU-compatible Poisson sampling
-randexp(T::Type) = -log(rand(T))
-randexp() = randexp(Float64)
-
-function count_rand(λ)
-    λ = Float64(λ)
-    n = 0
-    c = randexp(Float64)
-    while c < λ
-        n += 1
-        c += randexp(Float64)
-    end
-    return n
-end
+# GPU-compatible Poisson sampling PassthroughRNG
+struct PassthroughRNG <: AbstractRNG end
 
 function count_rand(rng::AbstractRNG, λ)
     n = 0
-    c = randexp(rng)
+    c = rng isa PassthroughRNG ? randexp() : randexp(rng)
     while c < λ
         n += 1
-        c += randexp(rng)
+        c += rng isa PassthroughRNG ? randexp() : randexp(rng)
     end
     return n
 end
@@ -39,13 +27,13 @@ end
 #
 #   For μ sufficiently large, (i.e. >= 10.0)
 #
-function ad_rand(λ)
+function ad_rand(rng::AbstractRNG, λ)
     λ = Float64(λ)
     s = sqrt(λ)
     d = 6.0 * λ^2
     L = floor(Int, λ - 1.1484)
 
-    G = λ + s * randn()
+    G = λ + s * (rng isa PassthroughRNG ? randn() : randn(rng))
 
     if G >= 0
         K = floor(Int, G)
@@ -53,7 +41,7 @@ function ad_rand(λ)
             return K
         end
 
-        U = rand()
+        U = rng isa PassthroughRNG ? rand() : rand(rng)
         if d * U >= (λ - K)^3
             return K
         end
@@ -65,8 +53,8 @@ function ad_rand(λ)
     end
 
     while true
-        E = randexp()
-        U = 2 * rand() - 1
+        E = rng isa PassthroughRNG ? randexp() : randexp(rng)
+        U = 2 * (rng isa PassthroughRNG ? rand() : rand(rng)) - 1
         T_val = 1.8 + copysign(E, U)
         if T_val <= -0.6744
             continue
@@ -76,55 +64,6 @@ function ad_rand(λ)
         px, py, fx, fy = procf(λ, K, s)
         c = 0.1069 / λ
 
-        @fastmath if c * abs(U) <= py * exp(px + E) - fy * exp(fx + E)
-            return K
-        end
-    end
-end
-
-function ad_rand(rng::AbstractRNG, λ)
-    s = sqrt(λ)
-    d = 6 * λ^2
-    L = floor(Int, λ - 1.1484)
-    # Step N
-    G = λ + s * randn(rng)
-
-    if G >= 0
-        K = floor(Int, G)
-        # Step I
-        if K >= L
-            return K
-        end
-
-        # Step S
-        U = rand(rng)
-        if d * U >= (λ - K)^3
-            return K
-        end
-
-        # Step P
-        px, py, fx, fy = procf(λ, K, s)
-
-        # Step Q
-        if fy * (1 - U) <= py * exp(px - fx)
-            return K
-        end
-    end
-
-    while true
-        # Step E
-        E = randexp(rng)
-        U = 2 * rand(rng) - 1
-        T = 1.8 + copysign(E, U)
-        if T <= -0.6744
-            continue
-        end
-
-        K = floor(Int, λ + s * T)
-        px, py, fx, fy = procf(λ, K, s)
-        c = 0.1069 / λ
-
-        # Step H
         @fastmath if c * abs(U) <= py * exp(px + E) - fy * exp(fx + E)
             return K
         end
@@ -161,34 +100,6 @@ function procf(λ, K::Int, s::Float64)
     return px, py, fx, fy
 end
 
-function procf(λ, K::Int, s::Float64)
-    # can be pre-computed, but does not seem to affect performance
-    INV_SQRT_2PI = inv(sqrt(2pi))
-    ω = INV_SQRT_2PI / s
-    b1 = inv(24) / λ
-    b2 = 0.3 * b1 * b1
-    c3 = inv(7) * b1 * b2
-    c2 = b2 - 15 * c3
-    c1 = b1 - 6 * b2 + 45 * c3
-    c0 = 1 - b1 + 3 * b2 - 15 * c3
-
-    if K < 10
-        px = -float(λ)
-        py = λ^K / factorial(K)
-    else
-        δ = inv(12) / K
-        δ -= 4.8 * δ^3
-        V = (λ - K) / K
-        px = K * log1pmx(V) - δ # avoids need for table
-        py = INV_SQRT_2PI / sqrt(K)
-    end
-    X = (K - λ + 0.5) / s
-    X2 = X^2
-    fx = X2 / -2 # missing negation in pseudo-algorithm, but appears in fortran code.
-    fy = ω * (((c3 * X2 + c2) * X2 + c1) * X2 + c0)
-    return px, py, fx, fy
-end
-
 """
 ```julia
 pois_rand(λ)
@@ -209,7 +120,7 @@ rng = Xorshifts.Xoroshiro128Plus()
 pois_rand(rng, λ)
 ```
 """
-pois_rand(λ) = λ < 6 ? count_rand(λ) : ad_rand(λ)
+pois_rand(λ) = λ < 6 ? count_rand(PassthroughRNG(), λ) : ad_rand(PassthroughRNG(), λ)
 pois_rand(rng::AbstractRNG, λ) = λ < 6 ? count_rand(rng, λ) : ad_rand(rng, λ)
 
 end # module
