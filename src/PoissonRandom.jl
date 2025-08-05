@@ -123,13 +123,16 @@ Generates Poisson(λ) distributed random numbers using a fast polyalgorithm.
 ## Examples
 
 ```julia
-# Simple Poisson random which works on GPU
+# Simple Poisson random
 pois_rand(λ)
 
-# Using RNG
+# Using another RNG
 using RandomNumbers
 rng = Xorshifts.Xoroshiro128Plus()
 pois_rand(rng, λ)
+
+# Simple Poisson random on GPU
+pois_rand(PassthroughRNG(), λ)
 ```
 """
 pois_rand(λ) = pois_rand(Random.GLOBAL_RNG, λ)
