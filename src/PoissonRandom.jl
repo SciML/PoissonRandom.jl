@@ -2,10 +2,25 @@ module PoissonRandom
 
 using Random
 using LogExpFunctions: log1pmx
+using SpecialFunctions: loggamma
 
 export pois_rand
 
-count_rand(λ) = count_rand(Random.GLOBAL_RNG, λ)
+# GPU-compatible Poisson sampling
+randexp(T::Type) = -log(rand(T))
+randexp() = randexp(Float64)
+
+function count_rand(λ)
+    λ = Float64(λ)
+    n = 0
+    c = randexp(Float64)
+    while c < λ
+        n += 1
+        c += randexp(Float64)
+    end
+    return n
+end
+
 function count_rand(rng::AbstractRNG, λ)
     n = 0
     c = randexp(rng)
@@ -24,7 +39,49 @@ end
 #
 #   For μ sufficiently large, (i.e. >= 10.0)
 #
-ad_rand(λ) = ad_rand(Random.GLOBAL_RNG, λ)
+function ad_rand(λ)
+    λ = Float64(λ)
+    s = sqrt(λ)
+    d = 6.0 * λ^2
+    L = floor(Int, λ - 1.1484)
+
+    G = λ + s * randn()
+
+    if G >= 0
+        K = floor(Int, G)
+        if K >= L
+            return K
+        end
+
+        U = rand()
+        if d * U >= (λ - K)^3
+            return K
+        end
+
+        px, py, fx, fy = procf(λ, K, s)
+        if fy * (1 - U) <= py * exp(px - fx)
+            return K
+        end
+    end
+
+    while true
+        E = randexp()
+        U = 2 * rand() - 1
+        T_val = 1.8 + copysign(E, U)
+        if T_val <= -0.6744
+            continue
+        end
+
+        K = floor(Int, λ + s * T_val)
+        px, py, fx, fy = procf(λ, K, s)
+        c = 0.1069 / λ
+
+        @fastmath if c * abs(U) <= py * exp(px + E) - fy * exp(fx + E)
+            return K
+        end
+    end
+end
+
 function ad_rand(rng::AbstractRNG, λ)
     s = sqrt(λ)
     d = 6 * λ^2
@@ -76,6 +133,35 @@ end
 
 # Procedure F
 function procf(λ, K::Int, s::Float64)
+    INV_SQRT_2PI = 0.3989422804014327  # 1/sqrt(2π)
+    ω = INV_SQRT_2PI / s
+    b1 = 1 / (24 * λ)
+    b2 = 0.3 * b1^2
+    c3 = b1 * b2 / 7
+    c2 = b2 - 15 * c3
+    c1 = b1 - 6 * b2 + 45 * c3
+    c0 = 1 - b1 + 3 * b2 - 15 * c3
+
+    if K < 10
+        px = -λ
+        log_py = K * log(λ) - loggamma(K + 1)  # log(K!) via loggamma
+        py = exp(log_py)
+    else
+        δ = 1 / (12 * K)
+        δ -= 4.8 * δ^3
+        V = (λ - K) / K
+        px = K * log1pmx(V) - δ
+        py = INV_SQRT_2PI / sqrt(K)
+    end
+
+    X = (K - λ + 0.5) / s
+    X2 = X^2
+    fx = -X2 / 2
+    fy = ω * (((c3 * X2 + c2) * X2 + c1) * X2 + c0)
+    return px, py, fx, fy
+end
+
+function procf(λ, K::Int, s::Float64)
     # can be pre-computed, but does not seem to affect performance
     INV_SQRT_2PI = inv(sqrt(2pi))
     ω = INV_SQRT_2PI / s
@@ -114,16 +200,16 @@ Generates Poisson(λ) distributed random numbers using a fast polyalgorithm.
 ## Examples
 
 ```julia
-# Simple Poisson random
+# Simple Poisson random which works on GPU
 pois_rand(λ)
 
-# Using another RNG
+# Using RNG
 using RandomNumbers
 rng = Xorshifts.Xoroshiro128Plus()
 pois_rand(rng, λ)
 ```
 """
-pois_rand(λ) = pois_rand(Random.GLOBAL_RNG, λ)
+pois_rand(λ) = λ < 6 ? count_rand(λ) : ad_rand(λ)
 pois_rand(rng::AbstractRNG, λ) = λ < 6 ? count_rand(rng, λ) : ad_rand(rng, λ)
 
 end # module
