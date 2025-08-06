@@ -100,8 +100,7 @@ function procf(λ, K::Int, s::Float64)
 
     if K < 10
         px = -float(λ)
-        log_py = K * log(λ) - loggamma(K + 1) # log(K!) via loggamma
-        py = exp(log_py)
+        py = λ^K / prod(1:K)
     else
         δ = inv(12) / K
         δ -= 4.8 * δ^3
