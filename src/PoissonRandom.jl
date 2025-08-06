@@ -100,7 +100,7 @@ function procf(λ, K::Int, s::Float64)
 
     if K < 10
         px = -float(λ)
-        py = λ^K / prod(1:K)
+        py = λ^K / prod(2:K)
     else
         δ = inv(12) / K
         δ -= 4.8 * δ^3
