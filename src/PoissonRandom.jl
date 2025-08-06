@@ -2,7 +2,6 @@ module PoissonRandom
 
 using Random
 using LogExpFunctions: log1pmx
-using SpecialFunctions: loggamma
 
 export pois_rand, PassthroughRNG
 

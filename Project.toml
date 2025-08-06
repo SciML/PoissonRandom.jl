@@ -5,14 +5,12 @@ version = "0.4.5"
 [deps]
 LogExpFunctions = "2ab3a3ac-af41-5b50-aa03-7779005ae688"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
-SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
 
 [compat]
 Aqua = "0.8"
 Distributions = "0.25"
 LogExpFunctions = "0.3"
 Random = "1.10"
-SpecialFunctions = "2"
 Statistics = "1"
 Test = "1"
 julia = "1.10"
