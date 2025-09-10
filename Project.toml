@@ -1,6 +1,6 @@
 name = "PoissonRandom"
 uuid = "e409e4f3-bfea-5376-8464-e040bb5c01ab"
-version = "0.4.6"
+version = "0.4.7"
 
 [deps]
 LogExpFunctions = "2ab3a3ac-af41-5b50-aa03-7779005ae688"

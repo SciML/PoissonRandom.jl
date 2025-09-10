@@ -8,13 +8,9 @@ export pois_rand, PassthroughRNG
 # GPU-compatible Poisson sampling via PassthroughRNG
 struct PassthroughRNG <: AbstractRNG end
 
-rand(rng::PassthroughRNG) = Random.rand()
-randexp(rng::PassthroughRNG) = Random.randexp()
-randn(rng::PassthroughRNG) = Random.randn()
-
-rand(rng::AbstractRNG) = Random.rand(rng)
-randexp(rng::AbstractRNG) = Random.randexp(rng)
-randn(rng::AbstractRNG) = Random.randn(rng)
+Random.rand(rng::PassthroughRNG) = rand()
+Random.randexp(rng::PassthroughRNG) = randexp()
+Random.randn(rng::PassthroughRNG) = randn()
 
 count_rand(λ) = count_rand(Random.GLOBAL_RNG, λ)
 function count_rand(rng::AbstractRNG, λ)
