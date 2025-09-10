@@ -248,7 +248,7 @@ weakdeps = ["REPL"]
 deps = ["LogExpFunctions", "Random"]
 path = "/home/runner/work/PoissonRandom.jl/PoissonRandom.jl"
 uuid = "e409e4f3-bfea-5376-8464-e040bb5c01ab"
-version = "0.4.6"
+version = "0.4.8"
 
 [[deps.PrecompileTools]]
 deps = ["Preferences"]
