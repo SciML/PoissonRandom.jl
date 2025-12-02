@@ -3,7 +3,7 @@ Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 PoissonRandom = "e409e4f3-bfea-5376-8464-e040bb5c01ab"
 
 [sources]
-PoissonRandom = {path = "/home/runner/work/PoissonRandom.jl/PoissonRandom.jl"}
+PoissonRandom = {path = "/home/chrisrackauckas/github-runners/deepsea4-32/_work/PoissonRandom.jl/PoissonRandom.jl"}
 
 [compat]
 Documenter = "1"

@@ -82,9 +82,9 @@ version = "3.7.0+0"
 
 [[deps.Git_jll]]
 deps = ["Artifacts", "Expat_jll", "JLLWrappers", "LibCURL_jll", "Libdl", "Libiconv_jll", "OpenSSL_jll", "PCRE2_jll", "Zlib_jll"]
-git-tree-sha1 = "b6a684587ebe896d9f68ae777f648205940f0f70"
+git-tree-sha1 = "46bd50c245fe49ed87377c014a928a549b9ef7ed"
 uuid = "f8c6e375-362e-5223-8a59-34ff63f689eb"
-version = "2.51.3+0"
+version = "2.52.0+0"
 
 [[deps.IOCapture]]
 deps = ["Logging", "Random"]
@@ -247,7 +247,7 @@ weakdeps = ["REPL"]
 
 [[deps.PoissonRandom]]
 deps = ["LogExpFunctions", "Random"]
-path = "/home/runner/work/PoissonRandom.jl/PoissonRandom.jl"
+path = "/home/chrisrackauckas/github-runners/deepsea4-32/_work/PoissonRandom.jl/PoissonRandom.jl"
 uuid = "e409e4f3-bfea-5376-8464-e040bb5c01ab"
 version = "0.4.7"
 
