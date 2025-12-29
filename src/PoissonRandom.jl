@@ -12,8 +12,8 @@ Random.rand(rng::PassthroughRNG) = rand()
 Random.randexp(rng::PassthroughRNG) = randexp()
 Random.randn(rng::PassthroughRNG) = randn()
 
-count_rand(λ) = count_rand(Random.GLOBAL_RNG, λ)
-function count_rand(rng::AbstractRNG, λ)
+count_rand(λ::Real) = count_rand(Random.GLOBAL_RNG, λ)
+function count_rand(rng::AbstractRNG, λ::Real)
     n = 0
     c = randexp(rng)
     while c < λ
@@ -31,8 +31,8 @@ end
 #
 #   For μ sufficiently large, (i.e. >= 10.0)
 #
-ad_rand(λ) = ad_rand(Random.GLOBAL_RNG, λ)
-function ad_rand(rng::AbstractRNG, λ)
+ad_rand(λ::Real) = ad_rand(Random.GLOBAL_RNG, λ)
+function ad_rand(rng::AbstractRNG, λ::Real)
     s = sqrt(λ)
     d = 6 * λ^2
     L = floor(Int, λ - 1.1484)
@@ -82,7 +82,7 @@ function ad_rand(rng::AbstractRNG, λ)
 end
 
 # Procedure F
-function procf(λ, K::Int, s::Float64)
+function procf(λ::Real, K::Int, s::Float64)
     # can be pre-computed, but does not seem to affect performance
     INV_SQRT_2PI = inv(sqrt(2pi))
     ω = INV_SQRT_2PI / s
@@ -133,7 +133,7 @@ pois_rand(rng, λ)
 pois_rand(PoissonRandom.PassthroughRNG(), λ)
 ```
 """
-pois_rand(λ) = pois_rand(Random.GLOBAL_RNG, λ)
-pois_rand(rng::AbstractRNG, λ) = λ < 6 ? count_rand(rng, λ) : ad_rand(rng, λ)
+pois_rand(λ::Real) = pois_rand(Random.GLOBAL_RNG, λ)
+pois_rand(rng::AbstractRNG, λ::Real) = λ < 6 ? count_rand(rng, λ) : ad_rand(rng, λ)
 
 end # module
