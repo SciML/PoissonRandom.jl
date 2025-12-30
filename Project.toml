@@ -9,6 +9,7 @@ Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 [compat]
 Aqua = "0.8"
 Distributions = "0.25"
+ExplicitImports = "1.14.0"
 JET = "0.9, 0.10, 0.11"
 LogExpFunctions = "0.3"
 Random = "1.10"
@@ -19,9 +20,10 @@ julia = "1.10"
 [extras]
 Aqua = "4c88cf16-eb10-579e-8560-4a9242c79595"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+ExplicitImports = "7d51a73a-1435-4ff3-83d9-f097790105c7"
 JET = "c3a54625-cd67-489e-a8e7-0a5a0ff4e31b"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
-test = ["Aqua", "Statistics", "Test", "Distributions", "JET"]
+test = ["Aqua", "Statistics", "Test", "Distributions", "JET", "ExplicitImports"]

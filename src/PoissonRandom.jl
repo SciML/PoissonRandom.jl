@@ -1,6 +1,6 @@
 module PoissonRandom
 
-using Random
+using Random: Random, AbstractRNG, randexp
 using LogExpFunctions: log1pmx
 
 export pois_rand, PassthroughRNG

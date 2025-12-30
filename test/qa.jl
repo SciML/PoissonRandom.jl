@@ -1,4 +1,4 @@
-using PoissonRandom, Aqua, JET
+using PoissonRandom, Aqua, JET, ExplicitImports
 using Random
 
 @testset "Aqua" begin
@@ -25,4 +25,9 @@ end
         JET.@test_call target_modules = (PoissonRandom,) pois_rand(Random.default_rng(), 10.0)
         JET.@test_call target_modules = (PoissonRandom,) pois_rand(PassthroughRNG(), 10.0)
     end
+end
+
+@testset "ExplicitImports" begin
+    @test check_no_implicit_imports(PoissonRandom) === nothing
+    @test check_no_stale_explicit_imports(PoissonRandom) === nothing
 end
