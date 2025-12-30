@@ -113,3 +113,9 @@ end
         @test abs(sample_mean - Float64(λ)) < 3 * sqrt(Float64(λ))
     end
 end
+  
+if get(ENV, "GROUP", "all") == "all" || get(ENV, "GROUP", "all") == "nopre"
+    @testset "Allocation Tests" begin
+        include("alloc_tests.jl")
+    end
+end
