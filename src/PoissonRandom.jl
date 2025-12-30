@@ -82,7 +82,7 @@ function ad_rand(rng::AbstractRNG, λ::Real)
 end
 
 # Procedure F
-function procf(λ::Real, K::Int, s::Float64)
+function procf(λ::Real, K::Int, s::Real)
     # can be pre-computed, but does not seem to affect performance
     INV_SQRT_2PI = inv(sqrt(2pi))
     ω = INV_SQRT_2PI / s
