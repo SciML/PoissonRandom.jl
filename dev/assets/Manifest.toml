@@ -247,7 +247,7 @@ weakdeps = ["REPL"]
 
 [[deps.PoissonRandom]]
 deps = ["LogExpFunctions", "Random"]
-path = "/home/runner/work/PoissonRandom.jl/PoissonRandom.jl"
+path = "/home/chrisrackauckas/github-runners/demeter4-24/_work/PoissonRandom.jl/PoissonRandom.jl"
 uuid = "e409e4f3-bfea-5376-8464-e040bb5c01ab"
 version = "0.4.7"
 
