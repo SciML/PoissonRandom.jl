@@ -89,3 +89,9 @@ println("testing mixed random sampler")
 for λ in [5.0, 10.0, 15.0, 20.0, 30.0]
     test_samples(pois_rand, Distributions.Poisson(λ), n_tsamples)
 end
+
+if get(ENV, "GROUP", "all") == "all" || get(ENV, "GROUP", "all") == "nopre"
+    @testset "Allocation Tests" begin
+        include("alloc_tests.jl")
+    end
+end
