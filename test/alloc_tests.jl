@@ -43,7 +43,7 @@ using Random
         @check_allocs function test_procf(λ::Float64, K::Int, s::Float64)
             PoissonRandom.procf(λ, K, s)
         end
-        @test test_procf(10.0, 5, 3.162) isa NTuple{4,Float64}
-        @test test_procf(10.0, 15, 3.162) isa NTuple{4,Float64}
+        @test test_procf(10.0, 5, 3.162) isa NTuple{4, Float64}
+        @test test_procf(10.0, 15, 3.162) isa NTuple{4, Float64}
     end
 end
