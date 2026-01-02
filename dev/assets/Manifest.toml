@@ -246,8 +246,8 @@ weakdeps = ["REPL"]
     REPLExt = "REPL"
 
 [[deps.PoissonRandom]]
-deps = ["LogExpFunctions", "Random"]
-path = "/home/chrisrackauckas/github-runners/deepsea4-30/_work/PoissonRandom.jl/PoissonRandom.jl"
+deps = ["LogExpFunctions", "PrecompileTools", "Random"]
+path = "/home/runner/work/PoissonRandom.jl/PoissonRandom.jl"
 uuid = "e409e4f3-bfea-5376-8464-e040bb5c01ab"
 version = "0.4.7"
 
