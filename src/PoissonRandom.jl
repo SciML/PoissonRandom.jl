@@ -2,6 +2,7 @@ module PoissonRandom
 
 using Random: Random, AbstractRNG, randexp
 using LogExpFunctions: log1pmx
+using PrecompileTools: @compile_workload
 
 export pois_rand, PassthroughRNG
 
@@ -135,5 +136,15 @@ pois_rand(PoissonRandom.PassthroughRNG(), λ)
 """
 pois_rand(λ::Real) = pois_rand(Random.GLOBAL_RNG, λ)
 pois_rand(rng::AbstractRNG, λ::Real) = λ < 6 ? count_rand(rng, λ) : ad_rand(rng, λ)
+
+@compile_workload begin
+    # Precompile the most common code paths
+    # Small λ uses count_rand, large λ uses ad_rand
+    pois_rand(3.0)   # count_rand path (λ < 6)
+    pois_rand(50.0)  # ad_rand path (λ >= 6)
+    # PassthroughRNG for GPU compatibility
+    pois_rand(PassthroughRNG(), 3.0)
+    pois_rand(PassthroughRNG(), 50.0)
+end
 
 end # module
