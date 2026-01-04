@@ -80,6 +80,7 @@ function ad_rand(rng::AbstractRNG, λ::Real)
             return K
         end
     end
+    return
 end
 
 # Procedure F

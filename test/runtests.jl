@@ -6,11 +6,13 @@ include("qa.jl")
 
 n_tsamples = 10^5
 
-function test_samples(rand_func,
+function test_samples(
+        rand_func,
         distr::Distributions.DiscreteUnivariateDistribution,
         n::Int;                                # number of samples to generate
         q::Float64 = 1.0e-8,                     # confidence interval, 1 - q as confidence
-        verbose::Bool = false)                   # show intermediate info (for debugging)
+        verbose::Bool = false
+    )                   # show intermediate info (for debugging)
 
     # The basic idea
     # ------------------
@@ -68,7 +70,7 @@ function test_samples(rand_func,
 
     # check the counts
     for i in 1:m
-        verbose && println("v = $(rmin+i-1) ==> ($(clb[i]), $(cub[i])): $(cnts[i])")
+        verbose && println("v = $(rmin + i - 1) ==> ($(clb[i]), $(cub[i])): $(cnts[i])")
         clb[i] <= cnts[i] <= cub[i] ||
             error("The counts are out of the confidence interval.")
     end
@@ -113,7 +115,7 @@ end
         @test abs(sample_mean - Float64(λ)) < 3 * sqrt(Float64(λ))
     end
 end
-  
+
 if get(ENV, "GROUP", "all") == "all" || get(ENV, "GROUP", "all") == "nopre"
     @testset "Allocation Tests" begin
         include("alloc_tests.jl")
