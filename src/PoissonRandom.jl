@@ -13,7 +13,7 @@ Random.rand(rng::PassthroughRNG) = rand()
 Random.randexp(rng::PassthroughRNG) = randexp()
 Random.randn(rng::PassthroughRNG) = randn()
 
-count_rand(λ::Real) = count_rand(Random.GLOBAL_RNG, λ)
+count_rand(λ::Real) = count_rand(Random.default_rng(), λ)
 function count_rand(rng::AbstractRNG, λ::Real)
     n = 0
     c = randexp(rng)
@@ -32,7 +32,7 @@ end
 #
 #   For μ sufficiently large, (i.e. >= 10.0)
 #
-ad_rand(λ::Real) = ad_rand(Random.GLOBAL_RNG, λ)
+ad_rand(λ::Real) = ad_rand(Random.default_rng(), λ)
 function ad_rand(rng::AbstractRNG, λ::Real)
     s = sqrt(λ)
     d = 6 * λ^2
@@ -135,7 +135,7 @@ pois_rand(rng, λ)
 pois_rand(PoissonRandom.PassthroughRNG(), λ)
 ```
 """
-pois_rand(λ::Real) = pois_rand(Random.GLOBAL_RNG, λ)
+pois_rand(λ::Real) = pois_rand(Random.default_rng(), λ)
 pois_rand(rng::AbstractRNG, λ::Real) = λ < 6 ? count_rand(rng, λ) : ad_rand(rng, λ)
 
 @compile_workload begin
