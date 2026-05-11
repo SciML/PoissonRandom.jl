@@ -13,6 +13,15 @@ Random.rand(rng::PassthroughRNG) = rand()
 Random.randexp(rng::PassthroughRNG) = randexp()
 Random.randn(rng::PassthroughRNG) = randn()
 
+# When an overlay method table (e.g. CUDA.jl's `@device_override
+# Random.randexp(::AbstractRNG)`) shadows the methods above, the overlay body
+# runs with rng::PassthroughRNG and may call `Random.rand(rng, UInt52Raw())`
+# or `Random.rand(rng, T)`. The stdlib Sampler chain bottoms out at
+# `_rand52(r, rng_native_52(r))` → `rand(r, UInt64)`; provide those so the
+# chain still reaches bare rand(T) and the device-side default_rng path.
+Random.rng_native_52(::PassthroughRNG) = UInt64
+Random.rand(rng::PassthroughRNG, ::Type{T}) where {T} = rand(T)
+
 count_rand(λ::Real) = count_rand(Random.default_rng(), λ)
 function count_rand(rng::AbstractRNG, λ::Real)
     n = 0
