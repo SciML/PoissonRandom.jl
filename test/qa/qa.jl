@@ -1,5 +1,6 @@
 using PoissonRandom, Aqua, JET, ExplicitImports
 using Random
+using Test
 
 @testset "Aqua" begin
     Aqua.find_persistent_tasks_deps(PoissonRandom)
