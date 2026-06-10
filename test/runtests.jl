@@ -1,3 +1,7 @@
+using PoissonRandom
+import Distributions
+using Test, Statistics
+
 const GROUP = get(ENV, "GROUP", "All")
 
 if GROUP == "QA"
@@ -7,10 +11,6 @@ if GROUP == "QA"
     Pkg.instantiate()
     include(joinpath(@__DIR__, "qa", "qa.jl"))
 else
-    using PoissonRandom
-    import Distributions
-    using Test, Statistics
-
     n_tsamples = 10^5
 
     function test_samples(
