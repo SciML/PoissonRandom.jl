@@ -9,9 +9,9 @@ export pois_rand, PassthroughRNG
 # GPU-compatible Poisson sampling via PassthroughRNG
 struct PassthroughRNG <: AbstractRNG end
 
-Random.rand(rng::PassthroughRNG) = rand()
+Base.rand(rng::PassthroughRNG) = rand()
 Random.randexp(rng::PassthroughRNG) = randexp()
-Random.randn(rng::PassthroughRNG) = randn()
+Base.randn(rng::PassthroughRNG) = randn()
 
 # When an overlay method table (e.g. CUDA.jl's `@device_override
 # Random.randexp(::AbstractRNG)`) shadows the methods above, the overlay body
@@ -20,7 +20,7 @@ Random.randn(rng::PassthroughRNG) = randn()
 # `_rand52(r, rng_native_52(r))` → `rand(r, UInt64)`; provide those so the
 # chain still reaches bare rand(T) and the device-side default_rng path.
 Random.rng_native_52(::PassthroughRNG) = UInt64
-Random.rand(rng::PassthroughRNG, ::Type{T}) where {T} = rand(T)
+Base.rand(rng::PassthroughRNG, ::Type{T}) where {T} = rand(T)
 
 count_rand(λ::Real) = count_rand(Random.default_rng(), λ)
 function count_rand(rng::AbstractRNG, λ::Real)
