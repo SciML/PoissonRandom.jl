@@ -7,6 +7,9 @@ LogExpFunctions = "2ab3a3ac-af41-5b50-aa03-7779005ae688"
 PrecompileTools = "aea7be01-6a6a-4083-8856-8a6e6704d82a"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
+[sources]
+SciMLTesting = {url = "https://github.com/SciML/SciMLTesting.jl", rev = "a5cecca928f2c684c23505c3cd83921d71753e2e"}
+
 [compat]
 AllocCheck = "0.2"
 Aqua = "0.8"
@@ -17,7 +20,7 @@ LogExpFunctions = "0.3.14, 1.0"
 PrecompileTools = "1.2.0"
 Random = "1.10"
 SafeTestsets = "0.1, 1"
-SciMLTesting = "1"
+SciMLTesting = "2.1"
 Statistics = "1"
 Test = "1"
 julia = "1.10"
