@@ -1,5 +1,7 @@
 using SciMLTesting, PoissonRandom, JET, Test
 
+include("public_api_docs.jl")
+
 run_qa(
     PoissonRandom;
     explicit_imports = true,

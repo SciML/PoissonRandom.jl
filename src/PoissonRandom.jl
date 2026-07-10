@@ -6,7 +6,25 @@ using PrecompileTools: @compile_workload
 
 export pois_rand, PassthroughRNG
 
-# GPU-compatible Poisson sampling via PassthroughRNG
+"""
+    PassthroughRNG()
+
+An `AbstractRNG` sentinel for backend-specific random number generation.
+
+`PassthroughRNG` forwards scalar `rand`, `randn`, and `randexp` calls to the
+ambient random number implementation. It is useful when a backend, such as a GPU
+kernel overlay, provides the actual random number generation but an
+`AbstractRNG` argument is still needed by the Poisson sampler.
+
+# Examples
+
+```julia
+using PoissonRandom
+
+x = pois_rand(PassthroughRNG(), 3.0)
+x isa Integer
+```
+"""
 struct PassthroughRNG <: AbstractRNG end
 
 Base.rand(rng::PassthroughRNG) = rand()
@@ -122,26 +140,31 @@ function procf(λ::Real, K::Int, s::Real)
 end
 
 """
+    pois_rand(λ::Real)
+    pois_rand(rng::AbstractRNG, λ::Real)
+
+Draw one random variate from the Poisson distribution with rate `λ`.
+
+For small `λ`, `pois_rand` uses an exponential-counting method. For larger `λ`,
+it switches to the Ahrens-Dieter modified normal algorithm.
+
+# Arguments
+
+- `λ`: Poisson rate parameter. It should be nonnegative.
+- `rng`: optional random number generator. Defaults to `Random.default_rng()`.
+
+# Examples
+
 ```julia
-pois_rand(λ)
-pois_rand(rng::AbstractRNG, λ)
-```
+using PoissonRandom
+using Random
 
-Generates Poisson(λ) distributed random numbers using a fast polyalgorithm.
+rng = MersenneTwister(1234)
+x = pois_rand(rng, 4.0)
+x isa Integer
 
-## Examples
-
-```julia
-# Simple Poisson random
-pois_rand(λ)
-
-# Using another RNG
-using RandomNumbers
-rng = Xorshifts.Xoroshiro128Plus()
-pois_rand(rng, λ)
-
-# Simple Poisson random on GPU
-pois_rand(PoissonRandom.PassthroughRNG(), λ)
+y = pois_rand(PassthroughRNG(), 4.0)
+y isa Integer
 ```
 """
 pois_rand(λ::Real) = pois_rand(Random.default_rng(), λ)
