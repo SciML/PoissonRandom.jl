@@ -1,10 +1,9 @@
-using SciMLTesting, PoissonRandom, JET, Test
-
-include("public_api_docs.jl")
+using SciMLTesting, PoissonRandom, JET
 
 run_qa(
     PoissonRandom;
     explicit_imports = true,
+    api_docs_kwargs = (; rendered = true),
     ei_kwargs = (;
         # default_rng / rng_native_52 are Random stdlib internals (not public in
         # Random): default_rng is the standard default-RNG accessor; rng_native_52 is
