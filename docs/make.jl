@@ -9,7 +9,8 @@ makedocs(
     sitename = "PoissonRandom.jl",
     authors = "Chris Rackauckas",
     modules = [PoissonRandom],
-    clean = true, doctest = false, linkcheck = true,
+    clean = true, doctest = true, linkcheck = true,
+    checkdocs = :exports,
     format = Documenter.HTML(
         analytics = "UA-90474609-3",
         assets = ["assets/favicon.ico"],
