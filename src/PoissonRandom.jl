@@ -112,27 +112,31 @@ end
 
 # Procedure F
 function procf(λ::Real, K::Int, s::Real)
+    # Compute in the floating-point type of λ: Float64 literals here would
+    # promote only part of the tuple for e.g. Float32 rates, and the resulting
+    # Union-typed return forces a dynamic call in GPU kernels.
+    T = float(promote_type(typeof(λ), typeof(s)))
     # can be pre-computed, but does not seem to affect performance
-    INV_SQRT_2PI = inv(sqrt(2pi))
+    INV_SQRT_2PI = inv(sqrt(2 * T(pi)))
     ω = INV_SQRT_2PI / s
-    b1 = inv(24) / λ
-    b2 = 0.3 * b1 * b1
-    c3 = inv(7) * b1 * b2
+    b1 = inv(T(24)) / λ
+    b2 = T(0.3) * b1 * b1
+    c3 = inv(T(7)) * b1 * b2
     c2 = b2 - 15 * c3
     c1 = b1 - 6 * b2 + 45 * c3
     c0 = 1 - b1 + 3 * b2 - 15 * c3
 
     if K < 10
-        px = -float(λ)
-        py = λ^K / prod(2:K)
+        px = -T(λ)
+        py = T(λ)^K / prod(2:K)
     else
-        δ = inv(12) / K
-        δ -= 4.8 * δ^3
+        δ = inv(T(12)) / K
+        δ -= T(4.8) * δ^3
         V = (λ - K) / K
         px = K * log1pmx(V) - δ # avoids need for table
-        py = INV_SQRT_2PI / sqrt(K)
+        py = INV_SQRT_2PI / sqrt(T(K))
     end
-    X = (K - λ + 0.5) / s
+    X = (K - λ + T(0.5)) / s
     X2 = X^2
     fx = X2 / -2 # missing negation in pseudo-algorithm, but appears in fortran code.
     fy = ω * (((c3 * X2 + c2) * X2 + c1) * X2 + c0)
