@@ -2,6 +2,7 @@ using SciMLTesting, PoissonRandom, JET
 
 run_qa(
     PoissonRandom;
+    jet_kwargs = (; mode = :basic),
     ei_kwargs = (;
         # `rng_native_52` is the stdlib sampler hook required by CUDA's device
         # `randexp` overlay for `PassthroughRNG`; Random has no public replacement.
